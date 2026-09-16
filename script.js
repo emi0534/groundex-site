@@ -55,12 +55,6 @@
       badge_example:"BEISPIEL", badge_used:"Gebraucht", detail_btn:"Anfragen →",
       wa_default:"Merhaba, GroundEx web sitesi üzerinden yazıyorum.",
       wa_inquiry:(n)=>`Hallo, ich interessiere mich für: ${n}`,
-      comments_title:"Kundenstimmen & Kommentare",
-      comments_lead:"Teilen Sie Ihre Erfahrung — jeder Besucher kann hier schreiben. Kommentare werden lokal gespeichert (Demo).",
-      comments_name:"Ihr Name",
-      comments_text:"Ihr Kommentar",
-      comments_submit:"Kommentar absenden",
-      comments_empty:"Noch keine Kommentare. Schreiben Sie den ersten!",
     },
     tr: {
       nav_angebot:"Hizmetler", nav_fahrzeuge:"Araçlar", nav_service:"Süreç", nav_kontakt:"İletişim", nav_wa:"WhatsApp",
@@ -106,12 +100,6 @@
       badge_example:"ÖRNEK", badge_used:"İkinci El", detail_btn:"Sor →",
       wa_default:"Merhaba, GroundEx web sitesi üzerinden yazıyorum.",
       wa_inquiry:(n)=>`Merhaba, şununla ilgileniyorum: ${n}`,
-      comments_title:"Müşteri Yorumları & Yorumlar",
-      comments_lead:"Deneyiminizi paylaşın — siteye giren herkes yazabilir. Yorumlar şu an tarayıcıda saklanıyor (demo).",
-      comments_name:"Adınız",
-      comments_text:"Yorumunuz",
-      comments_submit:"Yorum Gönder",
-      comments_empty:"Henüz yorum yok. İlk yorumu sen yaz!",
     },
     en: {
       nav_angebot:"Services", nav_fahrzeuge:"Vehicles", nav_service:"Process", nav_kontakt:"Contact", nav_wa:"WhatsApp",
@@ -157,12 +145,6 @@
       badge_example:"SAMPLE", badge_used:"Used", detail_btn:"Inquire →",
       wa_default:"Hello, I'm reaching out via the GroundEx website.",
       wa_inquiry:(n)=>`Hi, I'm interested in: ${n}`,
-      comments_title:"Customer Reviews & Comments",
-      comments_lead:"Share your experience — every visitor can write here. Comments are stored locally for now (demo).",
-      comments_name:"Your name",
-      comments_text:"Your comment",
-      comments_submit:"Post comment",
-      comments_empty:"No comments yet. Be the first!",
     }
   };
 
@@ -325,7 +307,7 @@
     renderCards();
     renderFaq();
     renderTestimonials();
-    if(typeof renderComments === "function") renderComments();
+    
   }
 
   document.querySelectorAll(".lang-btn").forEach(btn=>{
@@ -338,6 +320,7 @@
     }, {threshold:0.15});
     document.querySelectorAll(".reveal:not(.in-view)").forEach(el=>io.observe(el));
   }
+
 
   // ============ MOBILE MENU ============
   const menuToggle = document.querySelector(".menu-toggle");
@@ -355,84 +338,6 @@
     });
   }
 
-  // ============ SCROLL EXCAVATOR ANIMATION ============
-  function initExcavatorScroll(){
-    const excavator = document.getElementById("scroll-excavator");
-    if(!excavator) return;
-    const parts = excavator.querySelectorAll(".ex-part");
-    window.addEventListener("scroll", ()=>{
-      const scrollY = window.scrollY;
-      const maxScroll = Math.min(document.body.scrollHeight - window.innerHeight, 1200);
-      const progress = Math.min(scrollY / maxScroll, 1); // 0 to 1
-
-      // Disassemble on scroll down
-      parts.forEach((part, i)=>{
-        const dir = (i % 2 === 0) ? 1 : -1;
-        const tx = progress * (40 + i * 25) * dir;
-        const ty = progress * (30 + i * 18);
-        const rot = progress * (15 + i * 12) * dir;
-        const scale = 1 - progress * 0.15;
-        part.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg) scale(${scale})`;
-        part.style.opacity = 1 - progress * 0.4;
-      });
-    }, {passive:true});
-  }
-
-  // ============ COMMENTS SYSTEM (localStorage demo) ============
-  const COMMENTS_KEY = "groundex_comments_v1";
-
-  function loadComments(){
-    try{
-      return JSON.parse(localStorage.getItem(COMMENTS_KEY) || "[]");
-    }catch(e){ return []; }
-  }
-
-  function saveComments(list){
-    localStorage.setItem(COMMENTS_KEY, JSON.stringify(list));
-  }
-
-  function renderComments(){
-    const listEl = document.getElementById("comments-list");
-    if(!listEl) return;
-    const comments = loadComments();
-    const t = i18n[currentLang];
-    if(comments.length === 0){
-      listEl.innerHTML = `<p class="comments-empty">${t.comments_empty || "Henüz yorum yok. İlk yorumu sen yaz!"}</p>`;
-      return;
-    }
-    listEl.innerHTML = comments.slice().reverse().map(c=>{
-      const date = new Date(c.ts).toLocaleDateString(currentLang === "tr" ? "tr-TR" : currentLang === "de" ? "de-DE" : "en-GB", {day:"2-digit", month:"short", year:"numeric"});
-      return `
-        <div class="comment-card">
-          <div class="comment-header">
-            <strong>${escapeHtml(c.name)}</strong>
-            <span class="comment-date">${date}</span>
-          </div>
-          <p class="comment-text">${escapeHtml(c.text)}</p>
-        </div>
-      `;
-    }).join("");
-  }
-
-  function initComments(){
-    const form = document.getElementById("comment-form");
-    if(!form) return;
-    form.addEventListener("submit", (e)=>{
-      e.preventDefault();
-      const name = form.querySelector("[name=name]").value.trim();
-      const text = form.querySelector("[name=text]").value.trim();
-      if(!name || !text) return;
-      const comments = loadComments();
-      comments.push({name, text, ts: Date.now()});
-      saveComments(comments);
-      form.reset();
-      renderComments();
-    });
-    renderComments();
-  }
-
   setLang("de");
   observeReveals();
   observeStatCounters();
-  initExcavatorScroll();
-  initComments();

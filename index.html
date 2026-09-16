@@ -71,36 +71,7 @@
     </div>
   </div>
 
-  <!-- Scroll-reactive excavator: parts break apart on scroll down, reassemble on scroll up -->
-  <div class="scroll-excavator-wrap" aria-hidden="true">
-    <svg id="scroll-excavator" viewBox="0 0 320 180" class="scroll-excavator">
-      <g class="ex-part" data-part="tracks">
-        <rect x="40" y="130" width="140" height="22" rx="4" fill="#3a4750"/>
-        <circle cx="60" cy="152" r="14" fill="#1c1f1e" stroke="#f2b705" stroke-width="3"/>
-        <circle cx="100" cy="152" r="14" fill="#1c1f1e" stroke="#f2b705" stroke-width="3"/>
-        <circle cx="145" cy="152" r="14" fill="#1c1f1e" stroke="#f2b705" stroke-width="3"/>
-      </g>
-      <g class="ex-part" data-part="body">
-        <rect x="55" y="95" width="90" height="40" rx="6" fill="#262b29"/>
-        <rect x="65" y="78" width="55" height="30" rx="4" fill="#3a4750"/>
-        <rect x="72" y="85" width="22" height="16" rx="2" fill="#f2b705" opacity="0.9"/>
-      </g>
-      <g class="ex-part" data-part="boom">
-        <path d="M140 110 L210 55 L230 60 L155 120 Z" fill="#e8590c"/>
-        <circle cx="145" cy="112" r="8" fill="#1c1f1e"/>
-      </g>
-      <g class="ex-part" data-part="stick">
-        <path d="M220 58 L270 95 L255 105 L210 70 Z" fill="#c2480a"/>
-        <circle cx="225" cy="65" r="6" fill="#1c1f1e"/>
-      </g>
-      <g class="ex-part" data-part="bucket">
-        <path d="M265 95 L300 115 L295 140 L255 125 L250 105 Z" fill="#f2b705"/>
-        <path d="M255 125 L295 140 L280 148 L250 135 Z" fill="#e8590c"/>
-      </g>
-    </svg>
-  </div>
-
-  <div class="stats-strip reveal">
+<div class="stats-strip reveal">
     <div class="stat"><div class="stat-num" data-count="3">0</div><div class="stat-label" data-i18n="stat1_label"></div></div>
     <div class="stat"><div class="stat-num" data-count="24h">0h</div><div class="stat-label" data-i18n="stat2_label"></div></div>
     <div class="stat"><div class="stat-num" data-count="B2B">B2B</div><div class="stat-label" data-i18n="stat3_label"></div></div>
@@ -204,23 +175,6 @@
     <h2 data-i18n="faq_title"></h2>
   </div>
   <div class="faq-list" id="faq-list"></div>
-</section>
-
-<!-- COMMENTS / YORUMLAR -->
-<section class="comments" id="comments">
-  <div class="section-head" style="padding-top:0;">
-    <div class="eyebrow-dark" data-i18n="comments_title"></div>
-    <h2 data-i18n="comments_title"></h2>
-    <p class="note" data-i18n="comments_lead"></p>
-  </div>
-  <div class="comments-inner">
-    <form id="comment-form" class="comment-form">
-      <input type="text" name="name" required maxlength="40" placeholder="" data-i18n-placeholder="comments_name">
-      <textarea name="text" required maxlength="400" rows="3" placeholder="" data-i18n-placeholder="comments_text"></textarea>
-      <button type="submit" class="wa-btn" data-i18n="comments_submit"></button>
-    </form>
-    <div id="comments-list" class="comments-list"></div>
-  </div>
 </section>
 
 <section class="contact" id="kontakt">
