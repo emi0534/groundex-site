@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!--
+  GroundEx GmbH — Website-Entwurf / Site Taslağı v2
+  Dil seçenekli: DE (varsayılan) / TR / EN
+
+  ================= TÜRKÇE NOTLAR =================
+  1) WHATSAPP_NUMBER: script içinde en üstte, kendi numaranla değiştir.
+  2) Yeni araç/malzeme eklemek: script içinde "const machines" dizisini bul.
+     Yeni bir kayıt eklemek için mevcutlardan birini kopyala, sona yapıştır, bilgileri değiştir. Örnek:
+
+     { name:"Örnek Makine Adı", category:"baumaschinen", type:"kauf", price:"10.000 €", specs:"Baujahr 2020 · 500 Bh", image:"" }
+
+     category şu üç değerden biri olmalı: "baumaschinen" | "fahrzeuge" | "werkzeuge"
+     type şu üç değerden biri olmalı:     "kauf" | "miete" | "kauf_miete"
+     image alanına fotoğraf linki yazarsan foto görünür, boş "" bırakırsan ikon görünür.
+     name, price, specs alanlarını istediğin dilde/serbest yazabilirsin — bunlar otomatik çevrilmez,
+     sadece category ve type etiketleri (Satılık/Kiralık, İş Makineleri/Araçlar vb.) dile göre otomatik değişir.
+  3) Metin çevirileri: script içinde "const i18n" bölümünde de/tr/en olarak var,
+     istersen buradan da düzenleyebilirsin.
+  4) Adres/e-posta/telefon: HTML içinde "Kontakt/İletişim/Contact" bölümündeki placeholder'lar.
+  ==================================================
+-->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>GroundEx GmbH — Baumaschinen &amp; Fahrzeuge: Verkauf, Vermietung, Service</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<body>
+
+<header>
+  <div class="navbar">
+    <a href="#top" class="logo"><img src="images/logo.png" alt="GroundEx GmbH Logo"></a>
+    <nav class="links">
+      <a href="#angebot" data-i18n="nav_angebot"></a>
+      <a href="#fahrzeuge" data-i18n="nav_fahrzeuge"></a>
+      <a href="#service" data-i18n="nav_service"></a>
+      <a href="#kontakt" data-i18n="nav_kontakt"></a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-switch" id="lang-switch">
+        <button class="lang-btn" data-lang="de">DE</button>
+        <button class="lang-btn" data-lang="tr">TR</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <a class="wa-btn" id="wa-nav" href="#" target="_blank" rel="noopener noreferrer" data-i18n="nav_wa"></a>
+      <button class="menu-toggle" aria-label="Menü">☰</button>
+    </div>
+  </div>
+</header>
+<div class="stripe"></div>
+
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="eyebrow" data-i18n="hero_eyebrow"></div>
+    <h1><span data-i18n="hero_h1_1"></span><em data-i18n="hero_h1_em"></em></h1>
+    <p class="lead" data-i18n="hero_lead"></p>
+    <div class="hero-ctas">
+      <a href="#fahrzeuge" class="wa-btn" data-i18n="hero_cta1"></a>
+      <a href="#" id="wa-hero" target="_blank" rel="noopener noreferrer" class="btn-outline" data-i18n="hero_cta2"></a>
+    </div>
+    <div class="tagline-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      <span data-i18n="tagline"></span>
+    </div>
+  </div>
+  <div class="stats-strip reveal">
+    <div class="stat"><div class="stat-num" data-count="3">0</div><div class="stat-label" data-i18n="stat1_label"></div></div>
+    <div class="stat"><div class="stat-num" data-count="24h">0h</div><div class="stat-label" data-i18n="stat2_label"></div></div>
+    <div class="stat"><div class="stat-num" data-count="B2B">B2B</div><div class="stat-label" data-i18n="stat3_label"></div></div>
+    <div class="stat"><div class="stat-num" data-count="DE" data-i18n="stat4_num">DE</div><div class="stat-label" data-i18n="stat4_label"></div></div>
+  </div>
+</section>
+
+<section class="services" id="angebot">
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="num" data-i18n="svc1_num"></span>
+      <h3 data-i18n="svc1_title"></h3>
+      <p data-i18n="svc1_desc"></p>
+    </div>
+    <div class="service-card reveal">
+      <span class="num" data-i18n="svc2_num"></span>
+      <h3 data-i18n="svc2_title"></h3>
+      <p data-i18n="svc2_desc"></p>
+    </div>
+    <div class="service-card reveal">
+      <span class="num" data-i18n="svc3_num"></span>
+      <h3 data-i18n="svc3_title"></h3>
+      <p data-i18n="svc3_desc"></p>
+    </div>
+  </div>
+</section>
+
+<div class="stripe thin"></div>
+
+<section id="fahrzeuge">
+  <div class="section-head reveal">
+    <div class="eyebrow-dark" data-i18n="fz_eyebrow"></div>
+    <h2 data-i18n="fz_title"></h2>
+    <p class="note" data-i18n="fz_note"></p>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div class="machine-grid" id="machine-grid"></div>
+</section>
+
+<section class="process" id="service">
+  <div class="section-head" style="padding-top:0;">
+    <div class="eyebrow-dark" data-i18n="process_eyebrow"></div>
+    <h2 data-i18n="process_title"></h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-step reveal">
+      <div class="step-num">01</div>
+      <h4 data-i18n="step1_title"></h4>
+      <p data-i18n="step1_desc"></p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">02</div>
+      <h4 data-i18n="step2_title"></h4>
+      <p data-i18n="step2_desc"></p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">03</div>
+      <h4 data-i18n="step3_title"></h4>
+      <p data-i18n="step3_desc"></p>
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="why-inner">
+    <div class="reveal">
+      <h2 data-i18n="why_title"></h2>
+      <p class="lead-p" data-i18n="why_lead"></p>
+      <a href="#kontakt" class="btn-outline" style="border-color:var(--orange);color:var(--yellow);" data-i18n="why_cta"></a>
+    </div>
+    <div class="why-list reveal">
+      <div class="why-item">
+        <div class="mark">→</div>
+        <div><h4 data-i18n="why1_title"></h4><p data-i18n="why1_desc"></p></div>
+      </div>
+      <div class="why-item">
+        <div class="mark">→</div>
+        <div><h4 data-i18n="why2_title"></h4><p data-i18n="why2_desc"></p></div>
+      </div>
+      <div class="why-item">
+        <div class="mark">→</div>
+        <div><h4 data-i18n="why3_title"></h4><p data-i18n="why3_desc"></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="section-head" style="padding-top:0;">
+    <div class="eyebrow-dark" data-i18n="testi_eyebrow"></div>
+    <h2 data-i18n="testi_title"></h2>
+    <p class="note" data-i18n="testi_note"></p>
+  </div>
+  <div class="testi-grid" id="testi-list"></div>
+</section>
+
+<section class="faq">
+  <div class="section-head" style="padding-top:0;">
+    <div class="eyebrow-dark" data-i18n="faq_eyebrow"></div>
+    <h2 data-i18n="faq_title"></h2>
+  </div>
+  <div class="faq-list" id="faq-list"></div>
+</section>
+
+<section class="contact" id="kontakt">
+  <h2 data-i18n="contact_title"></h2>
+  <p class="lead-p" data-i18n="contact_lead"></p>
+  <a href="#" id="wa-contact" target="_blank" rel="noopener noreferrer" class="wa-btn" data-i18n="contact_btn"></a>
+
+  <div class="contact-info">
+    <div>
+      <h4 data-i18n="addr_label"></h4>
+      <p>GroundEx GmbH<br>Musterstraße 1<br>12345 Musterstadt, Deutschland</p>
+    </div>
+    <div>
+      <h4 data-i18n="contact_label"></h4>
+      <p>WhatsApp: +49 XXX XXXXXXX<br>E-Mail: info@groundex.de</p>
+    </div>
+    <div>
+      <h4 data-i18n="hours_label"></h4>
+      <p data-i18n="hours_value"></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div><strong>GroundEx GmbH</strong> — <span data-i18n="footer_text"></span> © 2026</div>
+    <div class="footer-links">
+      <a href="impressum.html" data-i18n="footer_impressum"></a>
+      <span>·</span>
+      <a href="datenschutz.html" data-i18n="footer_datenschutz"></a>
+      <span>·</span>
+      <a href="agb.html" data-i18n="footer_agb"></a>
+    </div>
+  </div>
+</footer>
+
+<a href="#" id="wa-float" target="_blank" rel="noopener noreferrer" class="wa-float">
+  <span class="pulse"></span>
+  <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 2C8.28 2 2 8.28 2 16c0 2.62.7 5.08 1.92 7.2L2 30l6.98-1.87A13.9 13.9 0 0 0 16 30c7.72 0 14-6.28 14-14S23.72 2 16 2zm0 25.3c-2.32 0-4.5-.66-6.35-1.8l-.45-.27-4.14 1.1 1.11-4.03-.3-.47A11.28 11.28 0 0 1 4.7 16C4.7 9.76 9.76 4.7 16 4.7S27.3 9.76 27.3 16 22.24 27.3 16 27.3zm6.2-8.4c-.34-.17-2-1-2.3-1.1-.31-.11-.53-.17-.76.17-.22.34-.87 1.1-1.07 1.32-.2.23-.4.26-.74.09-.34-.17-1.43-.53-2.72-1.68-1-.9-1.68-2-1.88-2.34-.2-.34-.02-.52.15-.69.15-.15.34-.4.51-.6.17-.2.22-.34.34-.57.11-.23.06-.43-.03-.6-.09-.17-.76-1.85-1.05-2.53-.28-.67-.56-.58-.76-.59-.2-.01-.43-.01-.66-.01s-.6.09-.92.43c-.31.34-1.2 1.18-1.2 2.87s1.23 3.33 1.4 3.56c.17.23 2.42 3.7 5.86 5.19.82.35 1.46.56 1.96.72.82.26 1.57.22 2.16.13.66-.1 2-.82 2.28-1.6.28-.79.28-1.47.2-1.6-.09-.15-.31-.23-.65-.4z"/></svg>
+  <span class="wa-float-label" data-i18n="nav_wa"></span>
+</a>
+
+<script src="script.js"></script>
+</body>
+</html>
