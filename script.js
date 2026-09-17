@@ -4,9 +4,9 @@
 
   // ============ ARAÇ / MALZEME LİSTESİ ============
   const machines = [
-    { name:"John Deere Aufsitzmäher (Z-Serie)", category:"pflege", type:"kauf", price:"Preis auf Anfrage", specs:"Gebraucht · Zero-Turn · Profi-Mähwerk", image:"images/product3.jpg", used:true },
-    { name:"Profi-Freiflächenmäher", category:"pflege", type:"kauf", price:"Preis auf Anfrage", specs:"Gebraucht · Frontmähwerk · für große Flächen", image:"images/product1.jpg", used:true },
-    { name:"Kogo Tec Flächenkehrmaschine", category:"pflege", type:"kauf", price:"Preis auf Anfrage", specs:"Gebraucht · Anbau-Kehreinheit", image:"images/product2.jpg", used:true },
+    { name:"John Deere Aufsitzmäher (Z-Serie)", category:"pflege", type:"kauf", price:"Preis auf Anfrage", specs:"Gebraucht · Zero-Turn · Profi-Mähwerk", image:"images/product1.jpg", used:true },
+    { name:"Profi-Freiflächenmäher", category:"pflege", type:"kauf", price:"Preis auf Anfrage", specs:"Gebraucht · Frontmähwerk · für große Flächen", image:"images/product2.jpg", used:true },
+    { name:"Kogo Tec Flächenkehrmaschine", category:"pflege", type:"kauf", price:"Preis auf Anfrage", specs:"Gebraucht · Anbau-Kehreinheit", image:"images/product3.jpg", used:true },
   ];
 
   // ============ ÇEVİRİLER ============
@@ -168,10 +168,6 @@
       const key = el.getAttribute("data-i18n");
       if(t[key] !== undefined) el.textContent = t[key];
     });
-    document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
-      const key = el.getAttribute("data-i18n-placeholder");
-      if(t[key] !== undefined) el.placeholder = t[key];
-    });
     document.getElementById("wa-nav").href = waLink(t.wa_default);
     document.getElementById("wa-hero").href = waLink(t.wa_default);
     document.getElementById("wa-contact").href = waLink(t.wa_default);
@@ -307,7 +303,6 @@
     renderCards();
     renderFaq();
     renderTestimonials();
-    
   }
 
   document.querySelectorAll(".lang-btn").forEach(btn=>{
@@ -316,57 +311,32 @@
 
   function observeReveals(){
     const io = new IntersectionObserver((entries)=>{
-      entries.forEach((e)=>{
-        if(e.isIntersecting){
-          const delay = (parseInt(e.target.dataset.delay, 10) || 0) * 70;
-          setTimeout(()=> e.target.classList.add("in-view"), delay);
-          io.unobserve(e.target);
-        }
-      });
-    }, {threshold:0.12, rootMargin:"0px 0px -50px 0px"});
-    document.querySelectorAll(".reveal:not(.in-view)").forEach((el,i)=>{
-      if(!el.dataset.delay) el.dataset.delay = String(i % 5);
-      io.observe(el);
-    });
-  }
-
-  function initHeaderScroll(){
-    const header = document.querySelector("header");
-    if(!header) return;
-    const onScroll = ()=> header.classList.toggle("scrolled", window.scrollY > 50);
-    window.addEventListener("scroll", onScroll, {passive:true});
-    onScroll();
-  }
-
-  function initParallax(){
-    const hero = document.querySelector(".hero");
-    if(!hero) return;
-    window.addEventListener("scroll", ()=>{
-      const y = window.scrollY;
-      if(y < 1000){
-        hero.style.setProperty("--parallax", (y * 0.2) + "px");
-      }
-    }, {passive:true});
-  }
-
-  // ============ MOBILE MENU ============
-  const menuToggle = document.querySelector(".menu-toggle");
-  const navLinks = document.querySelector("nav.links");
-  if(menuToggle && navLinks){
-    menuToggle.addEventListener("click", ()=>{
-      navLinks.classList.toggle("open");
-      menuToggle.textContent = navLinks.classList.contains("open") ? "✕" : "☰";
-    });
-    navLinks.querySelectorAll("a").forEach(a=>{
-      a.addEventListener("click", ()=>{
-        navLinks.classList.remove("open");
-        menuToggle.textContent = "☰";
-      });
-    });
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in-view"); io.unobserve(e.target); } });
+    }, {threshold:0.15});
+    document.querySelectorAll(".reveal:not(.in-view)").forEach(el=>io.observe(el));
   }
 
   setLang("de");
   observeReveals();
   observeStatCounters();
-  initHeaderScroll();
-  initParallax();
+
+  // SHATTER / REASSEMBLE KEPÇE ANİMASYONU — scroll ile parçalanır, geri kaydırınca birleşir
+  function updateShatter(){
+    const rig = document.getElementById("shatter-rig");
+    const hero = document.getElementById("top");
+    if(!rig || !hero) return;
+    const heroHeight = hero.offsetHeight || 600;
+    const progress = Math.min(Math.max(window.scrollY / heroHeight, 0), 1);
+    const p1 = rig.querySelector(".piece-1");
+    const p2 = rig.querySelector(".piece-2");
+    const p3 = rig.querySelector(".piece-3");
+    const spread = 160 * progress;
+    const rot = 28 * progress;
+    p1.style.transform = `translate(${-spread}px, ${-spread*0.65}px) rotate(${-rot}deg)`;
+    p2.style.transform = `translate(0px, ${spread*0.95}px) rotate(${rot*0.35}deg)`;
+    p3.style.transform = `translate(${spread}px, ${-spread*0.55}px) rotate(${rot}deg)`;
+    rig.style.opacity = String(0.5 - progress*0.4);
+  }
+  window.addEventListener("scroll", updateShatter, {passive:true});
+  window.addEventListener("resize", updateShatter);
+  updateShatter();
