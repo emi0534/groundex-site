@@ -10,6 +10,16 @@
   ];
 
   // ============ ÇEVİRİLER ============
+  // ============ YORUMLAR (moderasyonlu — Google Form'dan onaylananlar buraya eklenir) ============
+  // Yeni onaylanmış bir yorum eklemek için: aşağıdaki listeye bir satır kopyala-yapıştır yap, bilgileri değiştir.
+  // stars: 1-5 arası tam sayı.
+  const REVIEW_FORM_URL = "https://forms.gle/PLACEHOLDER"; // Google Form linkini buraya yapıştır
+  const testimonials = [
+    { text:"So könnte eine echte Bewertung aussehen: kurz, ehrlich, mit konkretem Bezug zur Maschine oder zum Service.", author:"Platzhalter-Name", role:"Landschaftsbau-Betrieb", stars:5, example:true },
+    { text:"Beispieltext für eine Bewertung zur Vermietung — wird durch echtes Kundenfeedback ersetzt.", author:"Platzhalter-Name", role:"Kommunaler Betrieb", stars:5, example:true },
+    { text:"Beispieltext für eine Bewertung zum Reparaturservice — wird durch echtes Kundenfeedback ersetzt.", author:"Platzhalter-Name", role:"Handwerksbetrieb", stars:5, example:true },
+  ];
+
   const i18n = {
     de: {
       nav_angebot:"Angebot", nav_fahrzeuge:"Fahrzeuge", nav_service:"Service", nav_kontakt:"Kontakt", nav_wa:"WhatsApp",
@@ -37,11 +47,8 @@
       faq2_q:"Übernehmen Sie auch Reparaturen an Maschinen, die nicht von GroundEx sind?", faq2_a:"Ja, unsere Werkstatt repariert und wartet auch Fremdmaschinen und Fahrzeuge.",
       faq3_q:"Wie schnell bekomme ich eine Antwort auf WhatsApp?", faq3_a:"In der Regel innerhalb weniger Stunden während unserer Geschäftszeiten.",
       faq4_q:"Liefern Sie Maschinen auch an?", faq4_a:"Je nach Standort und Maschine ist eine Lieferung möglich — fragen Sie einfach bei der Anfrage danach.",
-      testi_eyebrow:"Stimmen", testi_title:"Kundenstimmen", testi_tag:"Beispiel",
+      testi_eyebrow:"Stimmen", testi_title:"Kundenstimmen", testi_tag:"Beispiel", testi_cta:"Eigene Bewertung abgeben",
       testi_note:"Diese Beispiele zeigen, wie Bewertungen hier aussehen werden — echte Kundenstimmen ersetzen sie, sobald verfügbar.",
-      testi1_text:"So könnte eine echte Bewertung aussehen: kurz, ehrlich, mit konkretem Bezug zur Maschine oder zum Service.", testi1_author:"Platzhalter-Name", testi1_role:"Landschaftsbau-Betrieb",
-      testi2_text:"Beispieltext für eine Bewertung zur Vermietung — wird durch echtes Kundenfeedback ersetzt.", testi2_author:"Platzhalter-Name", testi2_role:"Kommunaler Betrieb",
-      testi3_text:"Beispieltext für eine Bewertung zum Reparaturservice — wird durch echtes Kundenfeedback ersetzt.", testi3_author:"Platzhalter-Name", testi3_role:"Handwerksbetrieb",
       contact_title:"Fragen zu einer Maschine?", contact_lead:"Schreiben Sie uns direkt über WhatsApp — mit Fahrzeugname, und wir melden uns kurzfristig zurück.", contact_btn:"WhatsApp öffnen",
       addr_label:"Adresse", contact_label:"Kontakt", hours_label:"Erreichbarkeit", hours_value:"Mo–Fr: 08:00–17:00 · Sa: nach Vereinbarung",
       footer_text:"Baumaschinen & Fahrzeuge: Verkauf, Vermietung, Service.",
@@ -82,11 +89,8 @@
       faq2_q:"GroundEx'e ait olmayan makinelerin tamirini de yapıyor musunuz?", faq2_a:"Evet, atölyemiz başka firmalardan alınmış makine ve araçların da tamir ve bakımını yapar.",
       faq3_q:"WhatsApp'a ne kadar sürede dönüş yapıyorsunuz?", faq3_a:"Genellikle çalışma saatleri içinde birkaç saat içinde dönüş yapıyoruz.",
       faq4_q:"Makine teslimatı yapıyor musunuz?", faq4_a:"Konuma ve makineye göre teslimat mümkün olabilir — talep sırasında bunu belirtmeniz yeterli.",
-      testi_eyebrow:"Görüşler", testi_title:"Müşteri Yorumları", testi_tag:"Örnek",
+      testi_eyebrow:"Görüşler", testi_title:"Müşteri Yorumları", testi_tag:"Örnek", testi_cta:"Yorum bırak",
       testi_note:"Bu örnekler yorumların burada nasıl görüneceğini gösteriyor — gerçek müşteri yorumları geldikçe bunların yerine eklenecek.",
-      testi1_text:"Gerçek bir yorum böyle görünebilir: kısa, samimi, makine veya hizmetle ilgili somut bir detay içeren.", testi1_author:"Yer Tutucu İsim", testi1_role:"Peyzaj İşletmesi",
-      testi2_text:"Kiralama hakkında örnek bir yorum metni — gerçek müşteri geri bildirimiyle değiştirilecek.", testi2_author:"Yer Tutucu İsim", testi2_role:"Belediye İşletmesi",
-      testi3_text:"Tamir servisi hakkında örnek bir yorum metni — gerçek müşteri geri bildirimiyle değiştirilecek.", testi3_author:"Yer Tutucu İsim", testi3_role:"Zanaat İşletmesi",
       contact_title:"Bir makine hakkında sorunuz mu var?", contact_lead:"Bize doğrudan WhatsApp'tan yazın — araç adını belirtin, kısa sürede size dönüş yapalım.", contact_btn:"WhatsApp'ı aç",
       addr_label:"Adres", contact_label:"İletişim", hours_label:"Çalışma saatleri", hours_value:"Pzt–Cuma: 08:00–17:00 · Cumartesi: randevu ile",
       footer_text:"İş makineleri & araçlar: satış, kiralama, servis.",
@@ -127,11 +131,8 @@
       faq2_q:"Do you repair machines not bought from GroundEx?", faq2_a:"Yes, our workshop also repairs and services machines and vehicles from other providers.",
       faq3_q:"How fast do you reply on WhatsApp?", faq3_a:"Usually within a few hours during business hours.",
       faq4_q:"Do you deliver machines?", faq4_a:"Depending on location and machine, delivery may be possible — just ask when you inquire.",
-      testi_eyebrow:"Reviews", testi_title:"Customer Reviews", testi_tag:"Example",
+      testi_eyebrow:"Reviews", testi_title:"Customer Reviews", testi_tag:"Example", testi_cta:"Leave a review",
       testi_note:"These examples show how reviews will look here — real customer reviews will replace them once available.",
-      testi1_text:"This is what a real review might look like: short, honest, with a concrete detail about the machine or service.", testi1_author:"Placeholder Name", testi1_role:"Landscaping Company",
-      testi2_text:"Example review text about a rental — will be replaced with real customer feedback.", testi2_author:"Placeholder Name", testi2_role:"Municipal Business",
-      testi3_text:"Example review text about repair service — will be replaced with real customer feedback.", testi3_author:"Placeholder Name", testi3_role:"Trade Business",
       contact_title:"Questions about a machine?", contact_lead:"Message us directly on WhatsApp — include the vehicle name and we'll get back to you shortly.", contact_btn:"Open WhatsApp",
       addr_label:"Address", contact_label:"Contact", hours_label:"Hours", hours_value:"Mon–Fri: 8am–5pm · Sat: by appointment",
       footer_text:"Construction machinery & vehicles: sale, rental, service.",
@@ -250,17 +251,23 @@
     const list = document.getElementById("testi-list");
     if(!list) return;
     list.innerHTML = "";
-    for(let i=1;i<=3;i++){
+    testimonials.forEach(rev=>{
       const card = document.createElement("div");
       card.className = "testi-card reveal";
+      const stars = "★".repeat(rev.stars) + "☆".repeat(5-rev.stars);
       card.innerHTML = `
-        <span class="testi-tag">${t.testi_tag}</span>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">${escapeHtml(t["testi"+i+"_text"])}</p>
-        <div class="testi-author">${escapeHtml(t["testi"+i+"_author"])}</div>
-        <div class="testi-role">${escapeHtml(t["testi"+i+"_role"])}</div>
+        ${rev.example ? `<span class="testi-tag">${t.testi_tag}</span>` : ""}
+        <div class="testi-stars">${stars}</div>
+        <p class="testi-text">${escapeHtml(rev.text)}</p>
+        <div class="testi-author">${escapeHtml(rev.author)}</div>
+        <div class="testi-role">${escapeHtml(rev.role)}</div>
       `;
       list.appendChild(card);
+    });
+    const ctaBtn = document.getElementById("testi-cta");
+    if(ctaBtn){
+      ctaBtn.href = REVIEW_FORM_URL;
+      ctaBtn.textContent = t.testi_cta;
     }
     observeReveals();
   }
@@ -320,6 +327,34 @@
   observeReveals();
   observeStatCounters();
 
+  // TOZ / DUMAN BULUTLARI — sürekli süzülen arka plan tozu
+  function spawnDustField(){
+    const field = document.getElementById("dust-field");
+    if(!field) return;
+    const count = 14;
+    for(let i=0;i<count;i++){
+      const mote = document.createElement("div");
+      mote.className = "dust-mote";
+      const size = 30 + Math.random()*90;
+      const left = Math.random()*100;
+      const top = 20 + Math.random()*70;
+      const dx = (Math.random()*80 - 20).toFixed(0) + "px";
+      const dy = (-(60 + Math.random()*100)).toFixed(0) + "px";
+      const duration = 9 + Math.random()*10;
+      const delay = Math.random()*duration;
+      mote.style.width = size + "px";
+      mote.style.height = size + "px";
+      mote.style.left = left + "%";
+      mote.style.top = top + "%";
+      mote.style.setProperty("--dx", dx);
+      mote.style.setProperty("--dy", dy);
+      mote.style.animationDuration = duration + "s";
+      mote.style.animationDelay = "-" + delay + "s";
+      field.appendChild(mote);
+    }
+  }
+  spawnDustField();
+
   // SHATTER / REASSEMBLE KEPÇE ANİMASYONU — scroll ile parçalanır, geri kaydırınca birleşir
   function updateShatter(){
     const rig = document.getElementById("shatter-rig");
@@ -336,6 +371,17 @@
     p2.style.transform = `translate(0px, ${spread*0.95}px) rotate(${rot*0.35}deg)`;
     p3.style.transform = `translate(${spread}px, ${-spread*0.55}px) rotate(${rot}deg)`;
     rig.style.opacity = String(0.5 - progress*0.4);
+
+    // toz patlaması: parçalar ayrıldıkça toz bulutları büyüyüp belirir, birleşince kaybolur
+    const puffs = rig.querySelectorAll(".dust-puff");
+    const puffOffsets = [[-1,-0.6],[0,0.9],[1,-0.5]];
+    puffs.forEach((puff, i)=>{
+      const [ox,oy] = puffOffsets[i];
+      const puffScale = 0.4 + progress * 3.4;
+      const puffOpacity = Math.sin(Math.min(progress,1) * Math.PI); // 0 -> 1 -> 0 (en çok ortada)
+      puff.style.transform = `translate(${ox*spread}px, calc(-50% + ${oy*spread}px)) scale(${puffScale})`;
+      puff.style.opacity = String(puffOpacity);
+    });
   }
   window.addEventListener("scroll", updateShatter, {passive:true});
   window.addEventListener("resize", updateShatter);
