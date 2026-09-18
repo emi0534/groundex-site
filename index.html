@@ -135,19 +135,45 @@
   .hero::before{content:"";position:absolute;right:-10%;top:-20%;width:600px;height:600px;background:radial-gradient(circle, rgba(232,89,12,0.16) 0%, transparent 70%);}
   .hero-inner{max-width:1180px;margin:0 auto;position:relative;}
 
-  /* IŞIK HUZMESİ — sahneye derinlik katan yavaş geçen ışık */
+  /* İŞ MAKİNESİ SİLÜETLERİ — ufukta sürekli kayan, sıcak ışıkla arkadan aydınlatılmış sahne */
+  .skyline{position:absolute;left:0;right:0;bottom:190px;overflow:hidden;pointer-events:none;z-index:0;}
+  .skyline-track{display:flex;width:200%;height:100%;will-change:transform;}
+  .skyline-svg{width:50%;height:100%;flex-shrink:0;display:block;}
+  .skyline-far{height:70px;opacity:0.3;filter:blur(0.5px);}
+  .skyline-far .skyline-track{animation:skyline-scroll 55s linear infinite;}
+  .skyline-near{height:95px;opacity:0.55;bottom:150px;}
+  .skyline-near .skyline-track{animation:skyline-scroll 30s linear infinite reverse;}
+  @keyframes skyline-scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .skyline-track{animation:none;}
+  }
+  @media (max-width:960px){
+    .skyline{display:none;}
+  }
   .light-sweep{
     position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;
   }
   .light-sweep::before{
-    content:"";position:absolute;top:-20%;left:-30%;width:60%;height:140%;
-    background:linear-gradient(75deg, transparent 0%, rgba(242,183,5,0.05) 35%, rgba(242,183,5,0.09) 50%, rgba(242,183,5,0.05) 65%, transparent 100%);
-    transform:rotate(8deg);
-    animation:sweep 9s ease-in-out infinite;
+    content:"";position:absolute;top:-30%;left:-40%;width:55%;height:160%;
+    background:linear-gradient(78deg, transparent 0%, rgba(242,183,5,0.02) 30%, rgba(242,183,5,0.22) 50%, rgba(255,255,255,0.06) 52%, rgba(242,183,5,0.22) 54%, rgba(242,183,5,0.02) 70%, transparent 100%);
+    transform:rotate(6deg);
+    animation:sweep 6s ease-in-out infinite;
   }
   @keyframes sweep{
-    0%,100%{left:-40%;}
-    50%{left:70%;}
+    0%{left:-50%;}
+    50%{left:85%;}
+    100%{left:-50%;}
+  }
+  /* Yavaş "nefes alan" arka plan parlaması — sürekli, göze çarpan büyüyüp küçülme */
+  .hero::before{
+    animation:glow-pulse 5s ease-in-out infinite;
+  }
+  @keyframes glow-pulse{
+    0%,100%{opacity:0.7;transform:scale(1);}
+    50%{opacity:1;transform:scale(1.15);}
   }
 
   /* SİNEMATİK METİN GİRİŞİ — sayfa yüklenince kademeli beliren başlık/metin/butonlar */
@@ -172,17 +198,17 @@
   .dust-field{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
   .dust-mote{
     position:absolute;border-radius:50%;
-    background:radial-gradient(circle, rgba(242,183,5,0.16) 0%, rgba(242,183,5,0.05) 45%, transparent 72%);
-    filter:blur(3px);
+    background:radial-gradient(circle, rgba(242,183,5,0.38) 0%, rgba(242,183,5,0.14) 45%, transparent 72%);
+    filter:blur(2px);
     animation:dust-drift linear infinite;
     will-change:transform,opacity;
   }
   @keyframes dust-drift{
-    0%{transform:translate(0,0) scale(1);opacity:0;}
-    12%{opacity:1;}
-    50%{transform:translate(var(--dx,40px),calc(var(--dy,-60px)*0.5)) scale(1.15);}
-    88%{opacity:0.7;}
-    100%{transform:translate(calc(var(--dx,40px)*2),var(--dy,-60px)) scale(1.3);opacity:0;}
+    0%{transform:translate(0,0) scale(0.8);opacity:0;}
+    15%{opacity:1;}
+    50%{transform:translate(var(--dx,40px),calc(var(--dy,-60px)*0.5)) scale(1.25);}
+    85%{opacity:0.85;}
+    100%{transform:translate(calc(var(--dx,40px)*2),var(--dy,-60px)) scale(1.5);opacity:0;}
   }
   @media (prefers-reduced-motion: reduce){
     .dust-mote{animation:none;display:none;}
@@ -287,6 +313,8 @@
   .contact .wa-btn{padding:16px 32px;font-size:16px;}
   .contact-info{max-width:1180px;margin:60px auto 0;padding-top:34px;border-top:1px solid #d8d1bf;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:left;}
   .contact-info h4{font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:#888;margin-bottom:8px;}
+  .maps-link{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:13px;font-weight:700;color:var(--orange);text-decoration:underline;text-underline-offset:2px;}
+  .maps-link:hover{color:var(--orange-dark);}
   .contact-info p{margin:0;color:var(--asphalt);font-size:14.5px;}
   footer{background:var(--asphalt);color:#7d7a72;padding:22px 24px;font-size:12.5px;}
   footer strong{color:var(--concrete-2);}
@@ -343,6 +371,92 @@
 <section class="hero" id="top">
   <div class="light-sweep"></div>
   <div class="dust-field" id="dust-field"></div>
+  <div class="skyline skyline-far" aria-hidden="true">
+    <div class="skyline-track">
+      <svg class="skyline-svg" viewBox="0 0 900 150" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#0d1114" stroke="#f2b705" stroke-width="1.4" stroke-opacity="0.55">
+          <rect x="0" y="132" width="900" height="1.5" stroke="none" fill="#f2b705" opacity="0.25"/>
+          <rect x="20" y="118" width="90" height="18" rx="9"/>
+          <rect x="55" y="70" width="45" height="35" rx="3"/>
+          <rect x="60" y="61" width="20" height="10" rx="2"/>
+          <polyline points="95,85 135,45 165,60" fill="none" stroke-width="9" stroke-linecap="round"/>
+          <polygon points="165,60 188,54 193,70 171,79"/>
+          <rect x="330" y="15" width="8" height="110"/>
+          <rect x="313" y="122" width="42" height="10"/>
+          <rect x="238" y="10" width="182" height="6"/>
+          <rect x="330" y="10" width="42" height="6"/>
+          <line x1="262" y1="16" x2="262" y2="55" stroke-width="2"/>
+          <rect x="257" y="55" width="9" height="9"/>
+          <rect x="560" y="90" width="35" height="30" rx="3"/>
+          <rect x="598" y="75" width="85" height="45" rx="2"/>
+          <rect x="560" y="118" width="123" height="6"/>
+          <circle cx="580" cy="126" r="10"/>
+          <circle cx="615" cy="126" r="10"/>
+          <circle cx="660" cy="126" r="10"/>
+          <path d="M760,132 Q780,96 800,132 Z"/>
+          <path d="M800,132 Q826,102 852,132 Z"/>
+        </g>
+      </svg>
+      <svg class="skyline-svg" viewBox="0 0 900 150" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#0d1114" stroke="#f2b705" stroke-width="1.4" stroke-opacity="0.55">
+          <rect x="0" y="132" width="900" height="1.5" stroke="none" fill="#f2b705" opacity="0.25"/>
+          <rect x="20" y="118" width="90" height="18" rx="9"/>
+          <rect x="55" y="70" width="45" height="35" rx="3"/>
+          <rect x="60" y="61" width="20" height="10" rx="2"/>
+          <polyline points="95,85 135,45 165,60" fill="none" stroke-width="9" stroke-linecap="round"/>
+          <polygon points="165,60 188,54 193,70 171,79"/>
+          <rect x="330" y="15" width="8" height="110"/>
+          <rect x="313" y="122" width="42" height="10"/>
+          <rect x="238" y="10" width="182" height="6"/>
+          <rect x="330" y="10" width="42" height="6"/>
+          <line x1="262" y1="16" x2="262" y2="55" stroke-width="2"/>
+          <rect x="257" y="55" width="9" height="9"/>
+          <rect x="560" y="90" width="35" height="30" rx="3"/>
+          <rect x="598" y="75" width="85" height="45" rx="2"/>
+          <rect x="560" y="118" width="123" height="6"/>
+          <circle cx="580" cy="126" r="10"/>
+          <circle cx="615" cy="126" r="10"/>
+          <circle cx="660" cy="126" r="10"/>
+          <path d="M760,132 Q780,96 800,132 Z"/>
+          <path d="M800,132 Q826,102 852,132 Z"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="skyline skyline-near" aria-hidden="true">
+    <div class="skyline-track">
+      <svg class="skyline-svg" viewBox="0 0 900 150" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#0a0d0f" stroke="#f2b705" stroke-width="1.8" stroke-opacity="0.7">
+          <rect x="20" y="118" width="90" height="18" rx="9"/>
+          <rect x="55" y="70" width="45" height="35" rx="3"/>
+          <rect x="60" y="61" width="20" height="10" rx="2"/>
+          <polyline points="95,85 135,45 165,60" fill="none" stroke-width="9" stroke-linecap="round"/>
+          <polygon points="165,60 188,54 193,70 171,79"/>
+          <rect x="560" y="90" width="35" height="30" rx="3"/>
+          <rect x="598" y="75" width="85" height="45" rx="2"/>
+          <rect x="560" y="118" width="123" height="6"/>
+          <circle cx="580" cy="126" r="10"/>
+          <circle cx="615" cy="126" r="10"/>
+          <circle cx="660" cy="126" r="10"/>
+        </g>
+      </svg>
+      <svg class="skyline-svg" viewBox="0 0 900 150" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#0a0d0f" stroke="#f2b705" stroke-width="1.8" stroke-opacity="0.7">
+          <rect x="20" y="118" width="90" height="18" rx="9"/>
+          <rect x="55" y="70" width="45" height="35" rx="3"/>
+          <rect x="60" y="61" width="20" height="10" rx="2"/>
+          <polyline points="95,85 135,45 165,60" fill="none" stroke-width="9" stroke-linecap="round"/>
+          <polygon points="165,60 188,54 193,70 171,79"/>
+          <rect x="560" y="90" width="35" height="30" rx="3"/>
+          <rect x="598" y="75" width="85" height="45" rx="2"/>
+          <rect x="560" y="118" width="123" height="6"/>
+          <circle cx="580" cy="126" r="10"/>
+          <circle cx="615" cy="126" r="10"/>
+          <circle cx="660" cy="126" r="10"/>
+        </g>
+      </svg>
+    </div>
+  </div>
   <div class="hero-inner">
     <div class="eyebrow cinema-in d1" data-i18n="hero_eyebrow"></div>
     <h1 class="cinema-in d2"><span data-i18n="hero_h1_1"></span><em data-i18n="hero_h1_em"></em></h1>
@@ -474,6 +588,7 @@
     <div>
       <h4 data-i18n="addr_label"></h4>
       <p>GroundEx GmbH<br>Musterstraße 1<br>12345 Musterstadt, Deutschland</p>
+      <a href="#" id="maps-link" target="_blank" rel="noopener noreferrer" class="maps-link" data-i18n="addr_maps"></a>
     </div>
     <div>
       <h4 data-i18n="contact_label"></h4>
@@ -508,6 +623,8 @@
 <script>
   // ============ AYARLAR — buradan düzenle ============
   const WHATSAPP_NUMBER = "49XXXXXXXXXX"; // örn: "491701234567"
+  // Adres değişince bu satırı güncelle — hem yazı hem Google Haritalar linki buradan otomatik oluşur.
+  const COMPANY_ADDRESS = "Musterstraße 1, 12345 Musterstadt, Deutschland";
 
   // ============ ARAÇ / MALZEME LİSTESİ ============
   const machines = [
@@ -557,7 +674,7 @@
       testi_eyebrow:"Stimmen", testi_title:"Kundenstimmen", testi_tag:"Beispiel", testi_cta:"Eigene Bewertung abgeben",
       testi_note:"Diese Beispiele zeigen, wie Bewertungen hier aussehen werden — echte Kundenstimmen ersetzen sie, sobald verfügbar.",
       contact_title:"Fragen zu einer Maschine?", contact_lead:"Schreiben Sie uns direkt über WhatsApp — mit Fahrzeugname, und wir melden uns kurzfristig zurück.", contact_btn:"WhatsApp öffnen",
-      addr_label:"Adresse", contact_label:"Kontakt", hours_label:"Erreichbarkeit", hours_value:"Mo–Fr: 08:00–17:00 · Sa: nach Vereinbarung",
+      addr_label:"Adresse", addr_maps:"Auf Google Maps ansehen →", contact_label:"Kontakt", hours_label:"Erreichbarkeit", hours_value:"Mo–Fr: 08:00–17:00 · Sa: nach Vereinbarung",
       footer_text:"Baumaschinen & Fahrzeuge: Verkauf, Vermietung, Service.",
       footer_impressum:"Impressum", footer_datenschutz:"Datenschutz", footer_agb:"AGB",
       legal_warning:"Platzhalter — vor Live-Schaltung mit echten Firmendaten ersetzen (gesetzlich vorgeschrieben nach § 5 TMG).",
@@ -599,7 +716,7 @@
       testi_eyebrow:"Görüşler", testi_title:"Müşteri Yorumları", testi_tag:"Örnek", testi_cta:"Yorum bırak",
       testi_note:"Bu örnekler yorumların burada nasıl görüneceğini gösteriyor — gerçek müşteri yorumları geldikçe bunların yerine eklenecek.",
       contact_title:"Bir makine hakkında sorunuz mu var?", contact_lead:"Bize doğrudan WhatsApp'tan yazın — araç adını belirtin, kısa sürede size dönüş yapalım.", contact_btn:"WhatsApp'ı aç",
-      addr_label:"Adres", contact_label:"İletişim", hours_label:"Çalışma saatleri", hours_value:"Pzt–Cuma: 08:00–17:00 · Cumartesi: randevu ile",
+      addr_label:"Adres", addr_maps:"Google Haritalar'da aç →", contact_label:"İletişim", hours_label:"Çalışma saatleri", hours_value:"Pzt–Cuma: 08:00–17:00 · Cumartesi: randevu ile",
       footer_text:"İş makineleri & araçlar: satış, kiralama, servis.",
       footer_impressum:"Yasal Bilgiler (Impressum)", footer_datenschutz:"Gizlilik Politikası", footer_agb:"Kullanım Koşulları",
       legal_warning:"Bu bir yer tutucudur — site yayına alınmadan önce gerçek firma bilgileriyle değiştirilmeli (Almanya'da § 5 TMG gereği zorunludur).",
@@ -641,7 +758,7 @@
       testi_eyebrow:"Reviews", testi_title:"Customer Reviews", testi_tag:"Example", testi_cta:"Leave a review",
       testi_note:"These examples show how reviews will look here — real customer reviews will replace them once available.",
       contact_title:"Questions about a machine?", contact_lead:"Message us directly on WhatsApp — include the vehicle name and we'll get back to you shortly.", contact_btn:"Open WhatsApp",
-      addr_label:"Address", contact_label:"Contact", hours_label:"Hours", hours_value:"Mon–Fri: 8am–5pm · Sat: by appointment",
+      addr_label:"Address", addr_maps:"Open in Google Maps →", contact_label:"Contact", hours_label:"Hours", hours_value:"Mon–Fri: 8am–5pm · Sat: by appointment",
       footer_text:"Construction machinery & vehicles: sale, rental, service.",
       footer_impressum:"Legal Notice", footer_datenschutz:"Privacy Policy", footer_agb:"Terms",
       legal_warning:"Placeholder — replace with real company details before going live (legally required in Germany under § 5 TMG).",
@@ -679,6 +796,8 @@
     document.getElementById("wa-nav").href = waLink(t.wa_default);
     document.getElementById("wa-hero").href = waLink(t.wa_default);
     document.getElementById("wa-contact").href = waLink(t.wa_default);
+    const mapsLink = document.getElementById("maps-link");
+    if(mapsLink) mapsLink.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(COMPANY_ADDRESS);
     document.getElementById("wa-float").href = waLink(t.wa_default);
     document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active", b.dataset.lang===currentLang));
   }
@@ -838,7 +957,7 @@
   function spawnDustField(){
     const field = document.getElementById("dust-field");
     if(!field) return;
-    const count = 14;
+    const count = 22;
     for(let i=0;i<count;i++){
       const mote = document.createElement("div");
       mote.className = "dust-mote";
