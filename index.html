@@ -24,8 +24,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';">
 <meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1c1f1e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GroundEx">
+<link rel="apple-touch-icon" href="images/icon-192.png">
 <title>GroundEx GmbH — Landschaftsbau &amp; Maschinentechnik: Verkauf, Vermietung, Service</title>
 <meta name="description" content="GroundEx GmbH beliefert Landschaftsbauer, Kommunen und Handwerksbetriebe mit Pflegetechnik zum Kauf und stellt schwere Maschinen zur Vermietung bereit. Eigener Reparaturservice, direkter Kontakt per WhatsApp.">
 <meta name="robots" content="index, follow">
@@ -1058,6 +1065,13 @@
     requestAnimationFrame(updateParallax);
   }
   requestAnimationFrame(updateParallax);
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    });
+  }
 </script>
 </body>
 </html>
