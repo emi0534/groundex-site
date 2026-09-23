@@ -1,7 +1,7 @@
 {
-  "name": "GroundEx GmbH — Landschaftsbau & Maschinentechnik",
-  "short_name": "GroundEx",
-  "description": "Maschinen & Geräte zum Kauf und zur Vermietung — plus eigener Reparaturservice.",
+  "name": "GroundEx Stok Takip",
+  "short_name": "GroundEx Stok",
+  "description": "GroundEx ürün stok durumu ve müşteri iletişimi",
   "start_url": "./index.html",
   "scope": "./",
   "id": "./",
@@ -9,19 +9,9 @@
   "orientation": "portrait-primary",
   "background_color": "#1c1f1e",
   "theme_color": "#1c1f1e",
-  "lang": "de",
+  "lang": "tr",
   "icons": [
-    {
-      "src": "images/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "images/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    }
+    { "src": "../images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "../images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
   ]
 }
