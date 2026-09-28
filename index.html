@@ -24,7 +24,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; connect-src https://docs.google.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; connect-src https://docs.google.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-src https://www.google.com; frame-ancestors 'none';">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>GroundEx GmbH — Landschaftsbau &amp; Maschinentechnik: Verkauf, Vermietung, Service</title>
 <meta name="description" content="GroundEx GmbH beliefert Landschaftsbauer, Kommunen und Handwerksbetriebe mit Pflegetechnik zum Kauf und stellt schwere Maschinen zur Vermietung bereit. Eigener Reparaturservice, direkter Kontakt per WhatsApp.">
@@ -47,12 +47,12 @@
   "description": "Landschaftsbau- und Maschinentechnik: Verkauf, Vermietung und Reparatur von Pflegetechnik und Baumaschinen.",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Musterstraße 1",
-    "postalCode": "12345",
-    "addressLocality": "Musterstadt",
+    "streetAddress": "Robert-Bosch-Straße 14",
+    "postalCode": "42477",
+    "addressLocality": "Radevormwald",
     "addressCountry": "DE"
   },
-  "telephone": "+49XXXXXXXXXX",
+  "telephone": "+491637216123",
   "url": "https://emi0534.github.io/groundex-site/",
   "openingHours": "Mo-Fr 08:00-17:00"
 }
@@ -366,16 +366,6 @@
   .faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;}
   .faq-a p{padding:0 4px 20px;font-size:14.5px;color:#555;max-width:640px;}
 
-  /* TESTIMONIALS */
-  .testimonials{background:var(--concrete-2);padding:70px 24px;}
-  .testi-grid{max-width:1180px;margin:34px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .testi-card{background:#fff;border:1.5px dashed #c9c2ae;padding:26px 22px;position:relative;}
-  .testi-tag{position:absolute;top:-11px;left:20px;background:var(--asphalt);color:var(--yellow);font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;padding:3px 10px;letter-spacing:0.05em;text-transform:uppercase;}
-  .testi-stars{color:var(--yellow);font-size:15px;letter-spacing:2px;margin-bottom:12px;}
-  .testi-text{font-size:14.5px;color:#444;line-height:1.6;margin-bottom:16px;font-style:italic;}
-  .testi-author{font-size:13px;font-weight:700;color:var(--asphalt);}
-  .testi-role{font-size:12px;color:#888;}
-  .testi-note{max-width:1180px;margin:24px auto 0;font-size:13px;color:#777;text-align:center;}
 
   /* VAKA ÇALIŞMALARI / REFERANS PROJELER */
   .cases{background:var(--concrete);padding:70px 24px;}
@@ -387,7 +377,6 @@
   .case-body h4{font-size:16px;margin-bottom:8px;}
   .case-body p{font-size:13.5px;color:#555;line-height:1.6;}
   @media (max-width:860px){.cases-grid{grid-template-columns:1fr;}}
-  @media (max-width:860px){.testi-grid{grid-template-columns:1fr;}}
 
   /* CONTACT / FOOTER */
   .contact{background:var(--concrete);padding:80px 24px 40px;text-align:center;border-top:1px solid #d8d1bf;}
@@ -396,6 +385,8 @@
   .contact .wa-btn{padding:16px 32px;font-size:16px;}
   .contact-info{max-width:1180px;margin:60px auto 0;padding-top:34px;border-top:1px solid #d8d1bf;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:left;}
   .contact-info h4{font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:#888;margin-bottom:8px;}
+  .map-wrap{margin-top:28px;border:1px solid #ddd6c6;line-height:0;}
+  .map-wrap iframe{width:100%;height:340px;border:0;}
   .maps-link{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:13px;font-weight:700;color:var(--orange);text-decoration:underline;text-underline-offset:2px;}
   .maps-link:hover{color:var(--orange-dark);}
   .contact-info p{margin:0;color:var(--asphalt);font-size:14.5px;}
@@ -425,6 +416,15 @@
     .hero{padding:60px 20px 50px;}
     .nav-right{gap:8px;}
   }
+
+
+  /* ===== Bölüm arka plan fotoğrafları =====
+     Görünürlüğü ayarlamak için 0.90 değerini değiştir (düşük = fotoğraf daha belirgin).
+     Fotoğrafı değiştirmek için url(images/....jpg) kısmını değiştir. */
+  .services{background:linear-gradient(rgba(237,234,227,.90),rgba(237,234,227,.90)),url(images/product1.jpg) center/cover no-repeat;}
+  .process{background:linear-gradient(rgba(226,221,208,.90),rgba(226,221,208,.90)),url(images/jcb1.jpg) center/cover no-repeat;}
+  .faq{background:linear-gradient(rgba(237,234,227,.92),rgba(237,234,227,.92)),url(images/trailer1.jpg) center/cover no-repeat;}
+  .contact{background:linear-gradient(rgba(237,234,227,.86),rgba(237,234,227,.86)),url(images/sprinter1.jpg) center/cover no-repeat;}
 
   /* ===== Ürün detay penceresi (galeri + açıklama) ===== */
   .more-btn{align-self:flex-start;margin-top:6px;background:none;border:1px solid var(--asphalt);color:var(--asphalt);font:700 12px 'IBM Plex Mono',monospace;letter-spacing:.04em;text-transform:uppercase;padding:7px 12px;cursor:pointer;transition:background .15s,color .15s;}
@@ -560,7 +560,8 @@
   </div>
 </section>
 
-<section class="cases">
+<!-- GİZLİ: gerçek projeler hazır olunca style="display:none" kısmını sil -->
+<section class="cases" style="display:none">
   <div class="section-head reveal">
     <div class="eyebrow-dark" data-i18n="cases_eyebrow"></div>
     <h2 data-i18n="cases_title"></h2>
@@ -594,18 +595,6 @@
   </div>
 </section>
 
-<section class="testimonials">
-  <div class="section-head" style="padding-top:0;">
-    <div class="eyebrow-dark" data-i18n="testi_eyebrow"></div>
-    <h2 data-i18n="testi_title"></h2>
-    <p class="note" data-i18n="testi_note"></p>
-  </div>
-  <div class="testi-grid" id="testi-list"></div>
-  <div style="text-align:center;margin-top:32px;">
-    <a href="#" id="testi-cta" target="_blank" rel="noopener noreferrer" class="btn-outline" style="border-color:var(--asphalt);color:var(--asphalt);display:inline-flex;"></a>
-  </div>
-</section>
-
 <section class="faq">
   <div class="section-head" style="padding-top:0;">
     <div class="eyebrow-dark" data-i18n="faq_eyebrow"></div>
@@ -622,18 +611,19 @@
   <div class="contact-info">
     <div>
       <h4 data-i18n="addr_label"></h4>
-      <p>GroundEx GmbH<br>Musterstraße 1<br>12345 Musterstadt, Deutschland</p>
+      <p>GroundEx GmbH<br>Robert-Bosch-Straße 14<br>42477 Radevormwald, Deutschland</p>
       <a href="#" id="maps-link" target="_blank" rel="noopener noreferrer" class="maps-link" data-i18n="addr_maps"></a>
     </div>
     <div>
       <h4 data-i18n="contact_label"></h4>
-      <p>WhatsApp: +49 XXX XXXXXXX<br>E-Mail: info@groundex.de</p>
+      <p>WhatsApp: +49 163 7216123<br>E-Mail: info@groundex.de</p>
     </div>
     <div>
       <h4 data-i18n="hours_label"></h4>
       <p data-i18n="hours_value"></p>
     </div>
   </div>
+  <div class="map-wrap"><iframe id="map-frame" title="GroundEx GmbH – Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
 </section>
 
 <footer>
@@ -657,9 +647,9 @@
 
 <script>
   // ============ AYARLAR — buradan düzenle ============
-  const WHATSAPP_NUMBER = "49XXXXXXXXXX"; // örn: "491701234567"
+  const WHATSAPP_NUMBER = "491637216123"; // örn: "491701234567"
   // Adres değişince bu satırı güncelle — hem yazı hem Google Haritalar linki buradan otomatik oluşur.
-  const COMPANY_ADDRESS = "Musterstraße 1, 12345 Musterstadt, Deutschland";
+  const COMPANY_ADDRESS = "Robert-Bosch-Straße 14, 42477 Radevormwald, Deutschland";
 
   // ============ ARAÇ / MALZEME LİSTESİ ============
   const machines = [
@@ -669,16 +659,6 @@
   ];
 
   // ============ ÇEVİRİLER ============
-  // ============ YORUMLAR (moderasyonlu — Google Form'dan onaylananlar buraya eklenir) ============
-  // Yeni onaylanmış bir yorum eklemek için: aşağıdaki listeye bir satır kopyala-yapıştır yap, bilgileri değiştir.
-  // stars: 1-5 arası tam sayı.
-  const REVIEW_FORM_URL = "https://forms.gle/PLACEHOLDER"; // Google Form linkini buraya yapıştır
-  const testimonials = [
-    { text:"So könnte eine echte Bewertung aussehen: kurz, ehrlich, mit konkretem Bezug zur Maschine oder zum Service.", author:"Platzhalter-Name", role:"Landschaftsbau-Betrieb", stars:5, example:true },
-    { text:"Beispieltext für eine Bewertung zur Vermietung — wird durch echtes Kundenfeedback ersetzt.", author:"Platzhalter-Name", role:"Kommunaler Betrieb", stars:5, example:true },
-    { text:"Beispieltext für eine Bewertung zum Reparaturservice — wird durch echtes Kundenfeedback ersetzt.", author:"Platzhalter-Name", role:"Handwerksbetrieb", stars:5, example:true },
-  ];
-
   const i18n = {
     de: {
       nav_angebot:"Angebot", nav_fahrzeuge:"Fahrzeuge", nav_service:"Service", nav_kontakt:"Kontakt", nav_wa:"WhatsApp",
@@ -853,6 +833,8 @@
     document.getElementById("wa-hero").href = waLink(t.wa_default);
     document.getElementById("wa-contact").href = waLink(t.wa_default);
     const mapsLink = document.getElementById("maps-link");
+    const mapFrame = document.getElementById("map-frame");
+    if(mapFrame && !mapFrame.src) mapFrame.src = "https://www.google.com/maps?q=" + encodeURIComponent(COMPANY_ADDRESS) + "&output=embed";
     if(mapsLink) mapsLink.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(COMPANY_ADDRESS);
     document.getElementById("wa-float").href = waLink(t.wa_default);
     document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active", b.dataset.lang===currentLang));
@@ -988,32 +970,6 @@
     observeReveals();
   }
 
-  function renderTestimonials(){
-    const t = i18n[currentLang];
-    const list = document.getElementById("testi-list");
-    if(!list) return;
-    list.innerHTML = "";
-    testimonials.forEach(rev=>{
-      const card = document.createElement("div");
-      card.className = "testi-card reveal";
-      const stars = "★".repeat(rev.stars) + "☆".repeat(5-rev.stars);
-      card.innerHTML = `
-        ${rev.example ? `<span class="testi-tag">${t.testi_tag}</span>` : ""}
-        <div class="testi-stars">${stars}</div>
-        <p class="testi-text">${escapeHtml(rev.text)}</p>
-        <div class="testi-author">${escapeHtml(rev.author)}</div>
-        <div class="testi-role">${escapeHtml(rev.role)}</div>
-      `;
-      list.appendChild(card);
-    });
-    const ctaBtn = document.getElementById("testi-cta");
-    if(ctaBtn){
-      ctaBtn.href = REVIEW_FORM_URL;
-      ctaBtn.textContent = t.testi_cta;
-    }
-    observeReveals();
-  }
-
   function animateCount(el, targetText){
     const match = targetText.match(/^(\d+)(.*)$/);
     if(!match){ el.textContent = targetText; return; }
@@ -1052,7 +1008,6 @@
     renderCards();
     renderFaq();
     renderCases();
-    renderTestimonials();
   }
 
   document.querySelectorAll(".lang-btn").forEach(btn=>{
