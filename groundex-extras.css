@@ -1,0 +1,103 @@
+/* GroundEx – Ek stiller: fotoğraf iyileştirme + canlı animasyonlar */
+
+/* ---------- FOTOĞRAF İŞLEME ---------- */
+.card-media{background:#2b3238;}
+.card-media img{
+  filter:contrast(1.08) saturate(1.14) brightness(1.04);
+  transition:transform .6s cubic-bezier(.2,.7,.2,1), filter .4s;
+}
+.card:hover .card-media img{filter:contrast(1.1) saturate(1.2) brightness(1.06);}
+/* stüdyo ışığı + vinyet: farklı çekilmiş fotoğrafları aynı görünüme çeker */
+.card-media::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 50% 35%, rgba(255,255,255,.12), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,.18) 0%, transparent 28%, transparent 62%, rgba(10,12,13,.45) 100%);
+}
+/* hover'da geçen ışık yansıması */
+.card-media::after{
+  content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;z-index:2;pointer-events:none;
+  background:linear-gradient(100deg, transparent, rgba(255,255,255,.28), transparent);
+  transform:skewX(-18deg);
+}
+.card:hover .card-media::after{left:130%;transition:left .9s ease;}
+.card-media .badge{z-index:3;}
+.card-media img{cursor:zoom-in;}
+
+/* ---------- KART EĞİMİ ---------- */
+.machine-grid{perspective:1200px;}
+.card{will-change:transform;transition:transform .2s ease-out, box-shadow .25s;}
+
+/* ---------- LIGHTBOX ---------- */
+.gx-lightbox{
+  position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;
+  background:rgba(10,12,13,.92);opacity:0;pointer-events:none;transition:opacity .25s;padding:24px;
+}
+.gx-lightbox.open{opacity:1;pointer-events:auto;}
+.gx-lightbox img{
+  max-width:min(1100px,100%);max-height:88vh;border-radius:2px;
+  transform:scale(.94);transition:transform .35s cubic-bezier(.2,.7,.2,1);
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+}
+.gx-lightbox.open img{transform:scale(1);}
+.gx-lightbox button{
+  position:absolute;top:18px;right:22px;background:none;border:0;color:#edeae3;font-size:34px;cursor:pointer;
+}
+.gx-lightbox button:focus-visible{outline:2px solid #f2b705;}
+
+/* ---------- KAYDIRMA ÇUBUĞU ---------- */
+.gx-progress{
+  position:fixed;top:0;left:0;height:3px;width:100%;z-index:200;
+  background:linear-gradient(90deg,#e8590c,#f2b705);
+  transform:scaleX(0);transform-origin:left;
+}
+
+/* ---------- ŞERİDİ KEN EKSKAVATÖR ---------- */
+.gx-digger{
+  position:absolute;left:0;bottom:6px;width:64px;z-index:6;pointer-events:none;
+  animation:gx-drive 22s linear infinite;
+}
+.gx-digger svg{display:block;width:100%;height:auto;animation:gx-bob .5s ease-in-out infinite alternate;}
+.gx-digger .arm{transform-origin:22px 20px;animation:gx-arm 3.2s ease-in-out infinite;}
+@keyframes gx-drive{from{transform:translateX(-80px);}to{transform:translateX(calc(100vw + 80px));}}
+@keyframes gx-bob{from{transform:translateY(0);}to{transform:translateY(-1px);}}
+@keyframes gx-arm{0%,100%{transform:rotate(0);}50%{transform:rotate(-14deg);}}
+
+/* ---------- ŞERİT-TİCKER ---------- */
+.gx-ticker{background:#e8590c;color:#1c1f1e;overflow:hidden;white-space:nowrap;padding:11px 0;border-block:1px solid #c2480a;}
+.gx-ticker-track{display:inline-flex;gap:0;animation:gx-scroll 28s linear infinite;}
+.gx-ticker span{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:15px;padding:0 26px;}
+.gx-ticker span::after{content:"◆";margin-left:52px;font-size:9px;vertical-align:middle;}
+.gx-ticker:hover .gx-ticker-track{animation-play-state:paused;}
+@keyframes gx-scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ---------- HERO IŞIĞI (fareyi takip eder) ---------- */
+.gx-spot{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(420px circle at var(--mx,70%) var(--my,30%), rgba(242,183,5,.16), transparent 60%);
+  transition:background-position .2s;
+}
+
+/* ---------- BUTONLAR & BAŞLIKLAR ---------- */
+.wa-btn,.btn-outline{position:relative;overflow:hidden;}
+.wa-btn::after{
+  content:"";position:absolute;top:0;bottom:0;left:-70%;width:40%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:skewX(-18deg);animation:gx-btnshine 4.5s ease-in-out infinite;pointer-events:none;
+}
+@keyframes gx-btnshine{0%,60%{left:-70%;}100%{left:140%;}}
+.section-head h2{position:relative;display:inline-block;}
+.section-head h2::after{
+  content:"";display:block;height:4px;width:0;margin-top:10px;background:#e8590c;transition:width .9s cubic-bezier(.2,.7,.2,1) .2s;
+}
+.section-head.in-view h2::after{width:64px;}
+.service-card{transition:background .25s, transform .25s;}
+.service-card:hover{background:#fff;transform:translateY(-3px);}
+.wa-float{animation:gx-float 3.4s ease-in-out infinite;}
+@keyframes gx-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+
+@media (prefers-reduced-motion:reduce){
+  .gx-digger,.gx-digger svg,.gx-digger .arm,.gx-ticker-track,.wa-btn::after,.wa-float{animation:none !important;}
+  .gx-digger{display:none;}
+  .card{transition:none;}
+}
