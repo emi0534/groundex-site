@@ -1,5 +1,4 @@
-/* GroundEx – Ürünleri Google Sheet'ten yükler.
-   Sheet erişilemezse sitedeki mevcut (elle yazılmış) ürünler görünmeye devam eder. */
+/* GroundEx – Google Sheet CSV Entegrasyonu */
 (function(){
   var SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCfV305APLIKOAu7lL2yiOJRP76kStQz7h1iUyOe-lmrwwmRx7zpZEFn6dCW7iQ_v0MQujK2ZBArpG/pub?output=csv";
 
@@ -24,29 +23,26 @@
   }
 
   var yes = /^(ja|evet|yes|1|x|true|wahr)$/i, no = /^(nein|hayir|hayır|no|0|false|falsch)$/i;
-  
-  // Sitedeki ve Sheet'teki TÜM kategoriler eklendi
   var CATS = ["baumaschinen", "fahrzeuge", "werkzeuge", "pflege", "nutzfahrzeuge", "gartengaete"];
   var TYPES = ["kauf", "miete", "kauf_miete", "beides"];
 
-  // Birden fazla resmi (virgülle ayrılmış) işleyebilen gelişmiş temizleme fonksiyonu
+  // Resim yollarını doğru çözen fonksiyon
   function cleanImages(v){
     v = (v || "").trim();
-    if(!v) return "";
+    if(!v) return "images/placeholder.jpg";
     
-    // Virgülle ayrılmış tüm resim isimlerini diziye böl ve boşlukları temizle
     var imgList = v.split(',').map(function(img){ return img.trim(); }).filter(Boolean);
-    
-    var processedList = imgList.map(function(imgName){
-      if(/^https:\/\/[^\s"'<>]+$/.test(imgName)) return imgName; // tam link ise
-      return "images/" + imgName.replace(/^images\//, ''); // klasör yolunu düzelt
-    });
+    if(!imgList.length) return "images/placeholder.jpg";
 
-    // Kartlarda kapak fotoğrafı olarak ilk resmi al
-    return processedList.length > 0 ? processedList[0] : "";
+    var firstImg = imgList[0];
+    if(/^https:\/\/[^\s"'<>]+$/.test(firstImg)) return firstImg;
+    
+    // Yalnızca dosya adı geldiyse başına images/ ekle
+    return "images/" + firstImg.replace(/^images\//, '');
   }
 
-  fetch(SHEET_CSV_URL)
+  // Önbellek engellemek için url sonuna timestamp ekle
+  fetch(SHEET_CSV_URL + "&t=" + new Date().getTime())
     .then(function(r){ if(!r.ok) throw new Error(r.status); return r.text(); })
     .then(function(text){
       var rows = parseCSV(text);
@@ -60,14 +56,20 @@
         if(!name || no.test(col(r, "aktiv"))) return;
         var cat = col(r, "kategorie").toLowerCase(), typ = col(r, "typ").toLowerCase();
         
+        var rawFoto = col(r, "foto");
+        var allImages = rawFoto ? rawFoto.split(',').map(function(i){ 
+          var clean = i.trim();
+          return /^https:\/\//.test(clean) ? clean : "images/" + clean.replace(/^images\//, '');
+        }) : ["images/placeholder.jpg"];
+
         items.push({
           name: name,
           category: CATS.indexOf(cat) >= 0 ? cat : "pflege",
           type: TYPES.indexOf(typ) >= 0 ? typ : "kauf",
           price: col(r, "preis") || "Preis auf Anfrage",
           specs: col(r, "beschreibung"),
-          image: cleanImages(col(r, "foto")),
-          images: col(r, "foto").split(',').map(function(i){ return i.trim(); }), // tüm resim dizisi
+          image: cleanImages(rawFoto),
+          images: allImages,
           used: yes.test(col(r, "gebraucht"))
         });
       });
@@ -79,9 +81,6 @@
       if(typeof activeCategory !== "undefined") activeCategory = "all";
       if(typeof renderFilters === "function") renderFilters();
       if(typeof renderCards === "function") renderCards();
-      
-      var bg = document.getElementById("hero-bg");
-      if(bg && items[0].image) bg.style.backgroundImage = "url(" + items[0].image + ")";
     })
-    .catch(function(e){ console.warn("GroundEx: Sheet yüklenemedi, yedek liste kullanılıyor.", e); });
+    .catch(function(e){ console.warn("GroundEx: Sheet yüklenemedi.", e); });
 })();
