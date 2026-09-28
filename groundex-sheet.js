@@ -1,4 +1,4 @@
-/* GroundEx – Google Sheet CSV Entegrasyonu */
+/* GroundEx – Google Sheet CSV Entegrasyonu (Çoklu Fotoğraf Destekli) */
 (function(){
   var SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCfV305APLIKOAu7lL2yiOJRP76kStQz7h1iUyOe-lmrwwmRx7zpZEFn6dCW7iQ_v0MQujK2ZBArpG/pub?output=csv";
 
@@ -26,22 +26,21 @@
   var CATS = ["baumaschinen", "fahrzeuge", "werkzeuge", "pflege", "nutzfahrzeuge", "gartengaete"];
   var TYPES = ["kauf", "miete", "kauf_miete", "beides"];
 
-  // Resim yollarını doğru çözen fonksiyon
-  function cleanImages(v){
-    v = (v || "").trim();
-    if(!v) return "images/placeholder.jpg";
+  // Resim yollarını tek tek ayıklayan ve düzelten fonksiyon
+  function processImages(rawString){
+    if(!rawString) return ["images/placeholder.jpg"];
     
-    var imgList = v.split(',').map(function(img){ return img.trim(); }).filter(Boolean);
-    if(!imgList.length) return "images/placeholder.jpg";
+    // Virgülle ayrılan resim isimlerini böl ve temizle
+    var list = rawString.split(',').map(function(item){
+      var clean = item.trim();
+      if(!clean) return "";
+      if(/^https:\/\//i.test(clean)) return clean;
+      return "images/" + clean.replace(/^images\//i, '');
+    }).filter(Boolean);
 
-    var firstImg = imgList[0];
-    if(/^https:\/\/[^\s"'<>]+$/.test(firstImg)) return firstImg;
-    
-    // Yalnızca dosya adı geldiyse başına images/ ekle
-    return "images/" + firstImg.replace(/^images\//, '');
+    return list.length > 0 ? list : ["images/placeholder.jpg"];
   }
 
-  // Önbellek engellemek için url sonuna timestamp ekle
   fetch(SHEET_CSV_URL + "&t=" + new Date().getTime())
     .then(function(r){ if(!r.ok) throw new Error(r.status); return r.text(); })
     .then(function(text){
@@ -56,11 +55,7 @@
         if(!name || no.test(col(r, "aktiv"))) return;
         var cat = col(r, "kategorie").toLowerCase(), typ = col(r, "typ").toLowerCase();
         
-        var rawFoto = col(r, "foto");
-        var allImages = rawFoto ? rawFoto.split(',').map(function(i){ 
-          var clean = i.trim();
-          return /^https:\/\//.test(clean) ? clean : "images/" + clean.replace(/^images\//, '');
-        }) : ["images/placeholder.jpg"];
+        var allImgs = processImages(col(r, "foto"));
 
         items.push({
           name: name,
@@ -68,8 +63,8 @@
           type: TYPES.indexOf(typ) >= 0 ? typ : "kauf",
           price: col(r, "preis") || "Preis auf Anfrage",
           specs: col(r, "beschreibung"),
-          image: cleanImages(rawFoto),
-          images: allImages,
+          image: allImgs[0], // Ana kapak resmi (kartta görünür)
+          images: allImgs,   // Tüm resimlerin dizisi (galeri/pop-up için)
           used: yes.test(col(r, "gebraucht"))
         });
       });
