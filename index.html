@@ -425,6 +425,28 @@
     .hero{padding:60px 20px 50px;}
     .nav-right{gap:8px;}
   }
+
+  /* ===== Ürün detay penceresi (galeri + açıklama) ===== */
+  .more-btn{align-self:flex-start;margin-top:6px;background:none;border:1px solid var(--asphalt);color:var(--asphalt);font:700 12px 'IBM Plex Mono',monospace;letter-spacing:.04em;text-transform:uppercase;padding:7px 12px;cursor:pointer;transition:background .15s,color .15s;}
+  .more-btn:hover{background:var(--asphalt);color:var(--yellow);}
+  .photo-count{position:absolute;bottom:10px;right:10px;background:rgba(28,31,30,.85);color:#fff;font:600 11px 'IBM Plex Mono',monospace;padding:3px 8px;}
+  .pm{position:fixed;inset:0;z-index:9998;background:rgba(20,22,21,.82);display:none;align-items:center;justify-content:center;padding:16px;}
+  .pm.open{display:flex;}
+  .pm-box{background:#fff;max-width:920px;width:100%;max-height:92vh;overflow:auto;display:grid;grid-template-columns:1.1fr 1fr;position:relative;}
+  .pm-close{position:absolute;top:8px;right:10px;z-index:2;background:var(--asphalt);color:#fff;border:none;width:34px;height:34px;font-size:22px;cursor:pointer;line-height:1;}
+  .pm-gallery{background:var(--steel);padding:12px;}
+  .pm-main{width:100%;aspect-ratio:4/3;object-fit:contain;background:#111;display:block;}
+  .pm-thumbs{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+  .pm-thumbs img{width:72px;height:54px;object-fit:cover;cursor:pointer;border:2px solid transparent;opacity:.7;}
+  .pm-thumbs img.on{border-color:var(--orange);opacity:1;}
+  .pm-info{padding:24px 22px;display:flex;flex-direction:column;gap:12px;}
+  .pm-info h3{font-size:22px;padding-right:30px;}
+  .pm-info .specs{font-size:13px;color:#666;line-height:1.6;}
+  .pm-details{font-size:14.5px;line-height:1.7;color:#333;}
+  .pm-price{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;}
+  .pm-cta{display:inline-block;background:var(--orange);color:#fff;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:12px 18px;text-align:center;margin-top:auto;}
+  .pm-cta:hover{background:var(--orange-dark);}
+  @media(max-width:720px){.pm-box{grid-template-columns:1fr;}}
 </style>
   <link rel="stylesheet" href="groundex-extras.css">
 <script src="groundex-extras.js" defer></script>
@@ -867,21 +889,60 @@
         card.innerHTML = `
           <div class="card-media">
             ${m.image ? `<img src="${m.image}" alt="${escapeHtml(m.name)}">` : icon}
+            ${(m.images && m.images.length>1) ? `<span class="photo-count">📷 ${m.images.length}</span>` : ""}
             <span class="badge">${typeLabels[m.type]}</span>
             ${m.used ? `<span class="badge example">${t.badge_used}</span>` : ""}
           </div>
           <div class="card-body">
             <h3>${escapeHtml(m.name)}</h3>
             <div class="specs mono">${escapeHtml(m.specs)}</div>
+            ${(m.details || (m.images && m.images.length>1)) ? `<button type="button" class="more-btn">${MORE_LABEL[currentLang] || MORE_LABEL.de}</button>` : ""}
           </div>
           <div class="card-footer">
             <div class="price">${escapeHtml(m.price)}<br><small>${catLabels[m.category]}</small></div>
             <a class="detail-btn" href="${waLink(t.wa_inquiry(m.name))}" target="_blank" rel="noopener noreferrer">${t.detail_btn}</a>
           </div>
         `;
+        const mb = card.querySelector(".more-btn");
+        if(mb) mb.onclick = ()=> openProduct(m);
         grid.appendChild(card);
       });
     observeReveals();
+  }
+
+  /* ===== Ürün detay penceresi ===== */
+  const MORE_LABEL = {de:"Mehr Details", tr:"Detaylar", en:"More details"};
+  const pm = document.createElement("div");
+  pm.className = "pm";
+  pm.innerHTML = '<div class="pm-box"><button class="pm-close" aria-label="Schließen">×</button><div class="pm-gallery"><img class="pm-main" alt=""><div class="pm-thumbs"></div></div><div class="pm-info"></div></div>';
+  document.body.appendChild(pm);
+  function closeProduct(){ pm.classList.remove("open"); document.body.style.overflow = ""; }
+  pm.addEventListener("click", e=>{ if(e.target === pm || e.target.closest(".pm-close")) closeProduct(); });
+  document.addEventListener("keydown", e=>{ if(e.key === "Escape") closeProduct(); });
+  function openProduct(m){
+    const t = i18n[currentLang];
+    const imgs = (m.images && m.images.length) ? m.images : (m.image ? [m.image] : []);
+    const main = pm.querySelector(".pm-main");
+    const thumbs = pm.querySelector(".pm-thumbs");
+    main.style.display = imgs.length ? "block" : "none";
+    if(imgs.length){ main.src = imgs[0]; main.alt = m.name; }
+    thumbs.innerHTML = "";
+    if(imgs.length > 1) imgs.forEach((src,i)=>{
+      const th = document.createElement("img");
+      th.src = src; th.alt = m.name + " " + (i+1);
+      if(i === 0) th.className = "on";
+      th.onclick = ()=>{ main.src = src; thumbs.querySelectorAll("img").forEach(x=>x.classList.remove("on")); th.classList.add("on"); };
+      thumbs.appendChild(th);
+    });
+    const det = escapeHtml(m.details || "").replace(/\s*\|\s*|\r?\n/g, "<br>");
+    pm.querySelector(".pm-info").innerHTML =
+      `<h3>${escapeHtml(m.name)}</h3>` +
+      `<div class="specs mono">${escapeHtml(m.specs)}</div>` +
+      (det ? `<div class="pm-details">${det}</div>` : "") +
+      `<div class="pm-price">${escapeHtml(m.price)}</div>` +
+      `<a class="pm-cta" href="${waLink(t.wa_inquiry(m.name))}" target="_blank" rel="noopener noreferrer">${t.detail_btn}</a>`;
+    pm.classList.add("open");
+    document.body.style.overflow = "hidden";
   }
 
   function renderFaq(){
@@ -1098,6 +1159,11 @@
     return "";
   }
 
+  // "a.jpg, b.jpg, c.jpg" -> ["images/a.jpg", "images/b.jpg", ...]
+  function cleanImages(v){
+    return (v || "").split(/[,;\n]+/).map(cleanImage).filter(Boolean);
+  }
+
   fetch(SHEET_CSV_URL + (SHEET_CSV_URL.indexOf("?") < 0 ? "?" : "&") + "t=" + Date.now(), { cache: "no-store" })
     .then(function(r){ if(!r.ok) throw new Error(r.status); return r.text(); })
     .then(function(text){
@@ -1118,7 +1184,9 @@
           type: TYPES.indexOf(typ) >= 0 ? typ : "kauf",
           price: col(r, "preis") || "Preis auf Anfrage",
           specs: col(r, "beschreibung"),
-          image: cleanImage(col(r, "foto")),
+          image: cleanImages(col(r, "foto"))[0] || "",
+          images: cleanImages(col(r, "foto")),
+          details: col(r, "details") || col(r, "detail"),
           used: yes.test(col(r, "gebraucht"))
         });
       });
