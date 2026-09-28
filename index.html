@@ -1098,7 +1098,7 @@
     return "";
   }
 
-  fetch(SHEET_CSV_URL, { cache: "no-store" })
+  fetch(SHEET_CSV_URL + (SHEET_CSV_URL.indexOf("?") < 0 ? "?" : "&") + "t=" + Date.now(), { cache: "no-store" })
     .then(function(r){ if(!r.ok) throw new Error(r.status); return r.text(); })
     .then(function(text){
       var rows = parseCSV(text);
