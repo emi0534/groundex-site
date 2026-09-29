@@ -447,6 +447,13 @@
   .pm-cta{display:inline-block;background:var(--orange);color:#fff;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:12px 18px;text-align:center;margin-top:auto;}
   .pm-cta:hover{background:var(--orange-dark);}
   @media(max-width:720px){.pm-box{grid-template-columns:1fr;}}
+
+  /* ===== Video galerisi ===== */
+  .videos{background:var(--asphalt);color:var(--concrete);padding:70px 24px;}
+  .video-grid{max-width:1180px;margin:34px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .video-card{background:#000;border:1px solid var(--line);overflow:hidden;}
+  .video-card video{width:100%;aspect-ratio:848/478;display:block;background:#000;}
+  @media(max-width:860px){.video-grid{grid-template-columns:1fr;}}
 </style>
   <link rel="stylesheet" href="groundex-extras.css">
 <script src="groundex-extras.js" defer></script>
@@ -534,6 +541,31 @@
 
   <div class="filters" id="filters"></div>
   <div class="machine-grid" id="machine-grid"></div>
+</section>
+
+<section class="videos">
+  <div class="section-head reveal" style="padding-top:0;">
+    <div class="eyebrow-dark" data-i18n="vid_eyebrow"></div>
+    <h2 data-i18n="vid_title" style="color:var(--concrete);"></h2>
+    <p class="note" data-i18n="vid_note" style="color:var(--concrete-2);"></p>
+  </div>
+  <div class="video-grid reveal">
+    <div class="video-card">
+      <video controls preload="metadata" poster="videos/demo1-poster.jpg" playsinline>
+        <source src="videos/demo1.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="video-card">
+      <video controls preload="metadata" poster="videos/demo2-poster.jpg" playsinline>
+        <source src="videos/demo2.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="video-card">
+      <video controls preload="metadata" poster="videos/demo3-poster.jpg" playsinline>
+        <source src="videos/demo3.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
 </section>
 
 <section class="process" id="service">
@@ -673,6 +705,7 @@
       svc3_num:"03 / Service", svc3_title:"Reparatur & Wartung", svc3_desc:"Eigene Werkstatt für Reparatur, Wartung und Instandsetzung — auch für Maschinen, die nicht bei uns gekauft wurden.",
       fz_eyebrow:"Bestand", fz_title:"Fahrzeuge & Maschinen",
       fz_note:"Ausgewählte gebrauchte Maschinen aus unserem Bestand — weitere Fahrzeuge werden laufend ergänzt.",
+      vid_eyebrow:"Im Einsatz", vid_title:"Maschinen in Aktion", vid_note:"Kurze Videos unserer Geräte im praktischen Einsatz.",
       process_eyebrow:"Ablauf", process_title:"So einfach geht's",
       step1_title:"Anfrage senden", step1_desc:"Fahrzeug oder Maschine auswählen und über WhatsApp anfragen — mit Wunschtermin oder Zeitraum.",
       step2_title:"Besichtigung & Klärung", step2_desc:"Details, Zustand und Preis werden persönlich oder telefonisch geklärt, Kauf oder Miete wird fixiert.",
@@ -722,6 +755,7 @@
       svc3_num:"03 / Servis", svc3_title:"Tamir & Bakım", svc3_desc:"Kendi atölyemizde tamir, bakım ve onarım — bizden alınmamış makineler için de geçerlidir.",
       fz_eyebrow:"Envanter", fz_title:"Araçlar & Makineler",
       fz_note:"Envanterimizden seçilmiş ikinci el makineler — yeni ürünler düzenli olarak eklenmektedir.",
+      vid_eyebrow:"İş Başında", vid_title:"Makineler Çalışırken", vid_note:"Ekipmanlarımızın saha kullanımından kısa görüntüler.",
       process_eyebrow:"Nasıl çalışır", process_title:"Bu kadar basit",
       step1_title:"Talep gönder", step1_desc:"Aracı veya makineyi seç, WhatsApp üzerinden istediğin tarih ya da süreyle birlikte ulaş.",
       step2_title:"Görüşme & netleştirme", step2_desc:"Detaylar, durum ve fiyat telefonda ya da yüz yüze netleştirilir, satış veya kiralama karara bağlanır.",
@@ -771,6 +805,7 @@
       svc3_num:"03 / Service", svc3_title:"Repair & Maintenance", svc3_desc:"Our own workshop handles repair, maintenance and servicing — including machines not purchased from us.",
       fz_eyebrow:"Inventory", fz_title:"Vehicles & Machines",
       fz_note:"Selected used machinery from our current inventory — more items are added regularly.",
+      vid_eyebrow:"In Action", vid_title:"Equipment in Action", vid_note:"Short clips of our machines at work in the field.",
       process_eyebrow:"How it works", process_title:"It's this simple",
       step1_title:"Send an inquiry", step1_desc:"Pick a vehicle or machine and reach out on WhatsApp with your preferred date or rental period.",
       step2_title:"Viewing & details", step2_desc:"Condition and price are clarified in person or by phone, and the sale or rental is confirmed.",
